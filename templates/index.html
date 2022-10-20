@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block main%}
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center d-flex justify-content-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Delivery</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">Find you Delivery Mate</h1>
+            <img src="/static/delivery.png" width="300"class="img-thumbnail" height="300" alt="Responsive image">
+            <form action="/delivery" method="get">
+              <button  class="w-100 btn btn-lg btn-primary">Check Delivery Posts!</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">In-Resturant</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">Find you Resturant Mate</h1>
+            <img src="/static/together.jpg" width="300"class="img-thumbnail" height="300" alt="Responsive image">
+            <form action="/in_resturant" method="get">
+            <button  class="w-100 btn btn-lg btn-primary">Check Resturant Posts!</button>
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

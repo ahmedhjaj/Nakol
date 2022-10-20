@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Resturant
+{% endblock %}
+
+{% block main %}
+<span>
+    <form action="/profile" method="post">
+        <div class="mb-3">
+            <label for="number" class="sr-only">Phone Number:</label>
+            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="number" name="number" value="{{profile.number}}" type="number">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="sr-only">Email:</label>
+            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" value="{{profile.email}}" type="email">
+        </div>
+        <div class="mb-3">
+            <label for="building" class="sr-only">Building:</label>
+            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="building" name="building" value="{{profile.building}}" type="text">
+        </div>
+        <div class="mb-3">
+            <label for="room" class="sr-only">Room:</label>
+            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="room" name="room" value="{{profile.room}}" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </form>
+</span>
+{% endblock %}

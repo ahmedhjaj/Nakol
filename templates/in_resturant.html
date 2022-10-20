@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %} In-Resturant {% endblock %}
+
+{% block main %}
+
+<a  class="w-10 btn btn-lg btn-primary" href="/add_post">Add A Post</a>
+<br><br>
+<div class="h1 text-left">
+    In-Resturant Posts
+</div>
+<div class="container text-start">
+    <hr class="divider">
+    {% for post in posts%}
+    <div class="row">
+        <div class="col">
+            <inline class="h6">Resturant:</inline>
+            {{ db.execute("SELECT resturant_name FROM resturants WHERE id = ?",post.rest_id)[0]["resturant_name"]}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+        {% set cuisines = db.execute("SELECT cuisine FROM cuisines WHERE rest_id = ?",post.rest_id)%}
+        <inline class="h6">Cuisines:</inline>
+        {% for cuisine in cuisines%}
+            {{cuisine.cuisine}},
+        {%endfor%}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <inline class="h6">From:</inline>
+            {{post.time_from}}
+        </div>
+        <div class="col">
+            <inline class="h6">To:</inline>
+            {{post.time_to}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <inline class="h6">Number of People:</inline>
+            {{post.current_people}} / {{post.number_of_people}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <inline class="h6">Comments:</inline>
+            {{post.comments}}
+        </div>
+        <div class="col">
+            <form action="/delivery" method="POST">
+            <button type="submit"  class="w-1 btn btn-lg btn-outline-primary" name="id" value={{post.id}}>Join</button>
+            </form>
+        </div>
+    </div>
+    <hr class="divider">
+    {%endfor%}
+</div>
+
+{% endblock %}

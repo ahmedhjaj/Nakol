@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %} Delivery {% endblock %}
+
+{% block main %}
+<form action="/add_post" method="post" class="row g-3">
+    <div class="col-12">
+        <select name="resturant" class="form-select">
+        <option disabled selected>Resturant</option>
+        {% for resturant in resturants%}
+        <option value="{{resturant.id}}">{{resturant.resturant_name}}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="from" class="form-label">From:</label>
+        <input required type="datetime-local" class="form-control"  name="from">
+    </div>
+    <div class="col-md-6">
+        <label for="to" class="form-label">To:</label>
+        <input  required type="datetime-local" class="form-control"  name="to">
+    </div>
+    <div class="mb-3">
+        <label for="order_type" class="form-label">Order Type:</label>
+        <select name="order_type" id="order_type" class="form-select">
+            <option disabled selected>Order Type</option>
+            <option value="order">Order</option>
+            <option value="in_resturant">In Resturant</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="number_of_people" class="form-label">Number of people:</label>
+        <input required type="number" class="form-control"  name="number_of_people">
+    </div>
+    <div class="mb-3">
+        <label for="comments" class="form-label">Comments</label>
+        <textarea name="comments" class="form-control"  id="comments" rows="2"></textarea>
+    </div>
+    
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Add Post</button>
+    </div>
+</form>
+
+
+{% endblock %}

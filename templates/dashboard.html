@@ -1,0 +1,42 @@
+{% extends "layout.html"%}
+
+{% block title%} Dashboard {% endblock %}
+
+{% block main %}
+
+    <p class="h1">Dashboard</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Number</th>
+                <th scope="col">Email</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for joiner in joiners%}
+            {% set user = db.execute("SELECT * FROM users WHERE id = ?", joiner["user_id"])[0]%}
+            {% set info = db.execute("SELECT * FROM profile WHERE user_id = ?", joiner["user_id"])[0]%}
+            {% set counter = 1 %}
+            <tr>
+                <td scope="col">{{counter}}</td>
+                <td scope="col">{{info.name}}</td>
+                <td scope="col">{{info.number}}</td>
+                <td scope="col">{{info.email}}</td>
+                {% if current_user == admin %}
+                <td scope="col">
+                    <form action="{{url_for('dashboard',post_id = post_id)}}" method="POST">
+                        <button type="submit"  class="w-1 btn btn-lg btn-outline-primary" name="id" value={{user.id}}>Delete</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {%set counter = counter + 1%}
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
