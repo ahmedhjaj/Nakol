@@ -2,7 +2,7 @@
 ## CS50x
 > CS50x: Introduction to Computer Science is Introduction to the intellectual enterprises of computer science and the art of programming. 
 
-> This is my final project for CS50x Course.
+> Nakol website is my final project for CS50x Course, built using Python, SQLite3, Flask, and Bootstrap5.
 
 ## Project Explainations
 
