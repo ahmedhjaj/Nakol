@@ -1,29 +1,55 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Add Resturant
+    Profile
 {% endblock %}
 
 {% block main %}
-<span>
-    <form action="/profile" method="post">
-        <div class="mb-3">
-            <label for="number" class="sr-only">Phone Number:</label>
-            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="number" name="number" value="{{profile.number}}" type="number">
+<div class="container-fluid">
+<form action="/profile" class="row g-3" method="post">
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text">Username</span>
+                <input required autocomplete="off" disabled  class="form-control mx-auto w-auto" id="username" name="username" value="{{user.username}}" type="text">
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="email" class="sr-only">Email:</label>
-            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" value="{{profile.email}}" type="email">
+
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text">Email</span>
+                <input required autocomplete="off" disabled class="form-control mx-auto w-auto" id="email" name="email" value="{{profile.email}}" type="email">
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="building" class="sr-only">Building:</label>
-            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="building" name="building" value="{{profile.building}}" type="text">
+
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text">Name</span>
+                <input required autocomplete="off"  class="form-control mx-auto w-auto" id="name" name="name" value="{{profile.name}}" type="name">
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="room" class="sr-only">Room:</label>
-            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="room" name="room" value="{{profile.room}}" type="number">
+
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text">Phone Number</span>
+                <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="number" name="number" value="{{profile.number}}" type="number">
+            </div>
         </div>
-        <button class="btn btn-primary" type="submit">Edit</button>
+        
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text">Building</span>
+                <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="building" name="building" value="{{profile.building}}" type="number">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text">Room</span>
+                <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="room" name="room" value="{{profile.room}}" type="number">
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary  w-25" type="submit">Edit</button>
+        </div>
     </form>
-</span>
+</div>
 {% endblock %}

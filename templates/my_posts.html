@@ -51,8 +51,13 @@
             {{post.comments}}
         </div>
         <div class="col">
-            <form action="/dashboard/{{post.id}}" method="POST">
-            <button type="submit"  class="w-1 btn btn-lg btn-outline-primary" name="id" value={{post.id}}>View</button>
+            <form action="/dashboard/{{post.id}}" method="get">
+            <button type="submit"  class="w-1 btn btn-lg btn-outline-primary">View</button>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/my_posts" method="POST">
+                <button type="submit"  class="w-1 btn btn-lg btn-outline-danger" name="id_post" value="{{post.id}}">Delete Post</button>
             </form>
         </div>
     </div>
