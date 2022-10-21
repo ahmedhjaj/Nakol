@@ -19,6 +19,8 @@ Nakol, "We Eat" in Arabic, is a website for EJUST students/university students w
 
 ## Tables used in the Project (sqlite3)
 
+![Tables Visual](/static/QuickDBD-export.png)
+
 - TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);
 - TABLE sqlite_sequence(name,seq);
 - UNIQUE INDEX username ON users (username);

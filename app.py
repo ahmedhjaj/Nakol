@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
@@ -17,8 +17,6 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-# Custom filter
-app.jinja_env.filters["usd"] = usd
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -100,7 +98,7 @@ def delivery():
         joiners = db.execute("SELECT user_id FROM dashboard WHERE id_post = ?", post_id)
         for joiner in joiners:
             if joiner["user_id"] == session["user_id"]:
-                return apology("Already Joined! Try Another Post.",400)
+                return apology("Already Joined",400)
         current_number = db.execute("SELECT current_people FROM posts WHERE id = ?", post_id)[0]["current_people"]
         max_number = db.execute("SELECT number_of_people FROM posts WHERE id = ?", post_id)[0]["number_of_people"]
         if current_number >= max_number:
@@ -135,40 +133,41 @@ def in_resturant():
 def dashboard(post_id):
     joiners = db.execute("SELECT user_id FROM dashboard WHERE id_post = ?",post_id)
     admin = joiners[0]["user_id"]
-    print(joiners)
+    print(type(admin), "and")
     if request.method == "POST":
         remove_user = request.form.get("id")
-        print(joiners[0]["user_id"])
-        print("ahaha",type(remove_user),"admin:",type(admin))
         if admin == int(remove_user):
             return apology("You can't delete the Admin!.",400)
         else:
+            print("a7ten")
             db.execute("DELETE FROM dashboard WHERE user_id = ? AND id_post = ?", remove_user,post_id)
             current_number = db.execute("SELECT current_people FROM posts WHERE id = ?", post_id)[0]["current_people"]
             db.execute("UPDATE posts SET current_people = ? WHERE id = ?",current_number-1,post_id) 
             return redirect(url_for('dashboard',post_id = post_id))
-    return render_template("dashboard.html",admin = joiners[0]["user_id"],post_id=post_id,joiners=joiners,db=db,current_user = session["user_id"])
+    return render_template("dashboard.html",admin = admin,post_id=post_id,joiners=joiners,db=db,current_user = int(session["user_id"]))
 
 
 @app.route("/profile", methods=["GET","POST"])
 @login_required
 def update_profile():
+    user = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])[0]
     profile = db.execute("SELECT * FROM profile WHERE user_id = ?", session["user_id"])[0]
     if request.method == "POST":
         #Inputs
         number = request.form.get("number")
-        email = request.form.get("email")
+        name = request.form.get("name")
         building = request.form.get("building")
         room = request.form.get("room")
 
         #update profile table
-        db.execute("UPDATE profile SET number = ?, email = ?, building = ?, room = ? ",number,email,building,room)
-    return render_template("profile.html",profile=profile)
+        db.execute("UPDATE profile SET name = ?, number = ?, building = ?, room = ?  WHERE user_id = ?",name,number,building,room, session["user_id"])
+        profile = db.execute("SELECT * FROM profile WHERE user_id = ?", session["user_id"])[0]
+        return render_template("profile.html",profile=profile,user=user)
+    return render_template("profile.html",profile=profile,user=user)
 
 @app.route("/")
 @login_required
 def index():
-    
 
     return render_template("index.html")
 
@@ -195,7 +194,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("invalid username and/or password", 403)
+            return apology("invalid username and or password", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -221,8 +220,12 @@ def logout():
 @app.route("/my_posts",methods = ["GET","POST"])
 def my_posts():
     posts = db.execute("SELECT * FROM posts WHERE user_id = ?", session["user_id"])
+    if request.method == "POST":
+        post_id = request.form.get("id_post")
+        db.execute("DELETE FROM dashboard WHERE id_post = ?",post_id)
+        db.execute("DELETE FROM posts WHERE id = ?",post_id)
+        posts = db.execute("SELECT * FROM posts WHERE user_id = ?", session["user_id"])
     return render_template("my_posts.html",posts=posts,db=db,len=len)
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -234,7 +237,7 @@ def register():
         usernames = db.execute("SELECT username FROM users")
         for counter in usernames:
             if username == counter["username"]:
-                return apology("This username is already taken! Try another.",400)
+                return apology("This username is already taken. Try another.",400)
         if not username or not password or not confirmation:
             return apology("All fields are required!",400)
         elif password != confirmation:
