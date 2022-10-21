@@ -17,6 +17,24 @@ Nakol, "We Eat" in Arabic, is a website for EJUST students/university students w
 - Access the Dashboard to see other's information: number, name, and email.
 - Add resturants
 
+## Demo
+
+> Youtube Video Demo: https://youtu.be/utcVu2w5mkw
+
+![Demo](/demo/add-post.png)
+![Demo](/demo/reg.png)
+![Demo](/demo/main.png)
+![Demo](/demo/delivery.png)
+![Demo](/demo/in-resturant.png)
+![Demo](/demo/add-resturant.png)
+![Demo](/demo/dashboard.png)
+![Demo](/demo/my-posts.png)
+![Demo](/demo/profile.png)
+
+
+
+
+
 ## Tables used in the Project (sqlite3)
 
 ![Tables Visual](/static/QuickDBD-export.png)
@@ -29,6 +47,7 @@ CREATE TABLE posts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEG
 - TABLE dashboard (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, id_post INTEGER, user_id INTEGER, Foreign KEY(id_post) REFERENCES posts(id), FOREIGN KEY (user_id) REFERENCES users(id));
 - TABLE resturants (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,resturant_name TEXT NOT NULL, resturant_number NUMERIC NOT NULL, dine_in BOOL NOT NULL, delivery BOOL NOT NULL, location TEXT NOT NULL);
 - TABLE profile (user_id INTEGER, number numeric NOT NULL, email TEXT NOT NULL,name TEXT NOT NULL, building NUMERIC NOT NULL, room NUMERIC NOT NULL , FOREIGN KEY(user_id) REFERENCES users(id));
+
 
 ## Technologies used
 
